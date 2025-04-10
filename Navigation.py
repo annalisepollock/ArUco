@@ -50,17 +50,14 @@ def tilt_up():
 def tilt_down():
     print("Tilt down")
 
+def turnRight():
+    print("Turn right")
+
+def turnLeft():
+    print("Turn left")
+
 def move_forward():
     print("Move forward")
-    time.sleep(1)
-
-def turn_left():
-    print("Turn left")
-    time.sleep(0.5)
-
-def turn_right():
-    print("Turn right")
-    time.sleep(0.5)
 
 def stop_robot():
     print("Stop robot")
@@ -69,12 +66,10 @@ def pass_marker(marker_id):
     print(f"Passing marker {marker_id}")
     if marker_id % 2 == 0:
         # Even marker: pass on right
-        move_forward()
-        turn_right()
+        turnRight()
     else:
         # Odd marker: pass on left
-        move_forward()
-        turn_left()
+        turnLeft()
 
 # === Main Loop ===
 try:
@@ -97,9 +92,15 @@ try:
                 rvec = rvecs[i][0]
                 tvec = tvecs[i][0]
 
-                # Draw marker and axis
-                cv2.aruco.drawDetectedMarkers(img, corners)
-                cv2.aruco.drawAxis(img, camera_matrix, dist_coeffs, rvec, tvec, 0.1)
+                for i, corner in enumerate(corners):
+                    # Get the marker ID
+                    marker_id = ids[i][0]
+
+                    # Extract the translation vector (pose information)
+                    x, y = tvec[i][0][0], tvec[i][0][1]
+
+                    # Display the marker ID and pose information
+                    print(f"Marker ID: {marker_id}, X: {x:.2f}, Y: {y:.2f}")
 
                 # Marker center
                 center_x = np.mean(corners[i][0][:, 0])
