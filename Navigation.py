@@ -91,16 +91,22 @@ try:
                 id = ids[i][0]
                 rvec = rvecs[i][0]
                 tvec = tvecs[i][0]
+                corners = corners[i]
+                print("corners")
+                print(corners)
+                print()
+                print("rvec")
+                print(rvec)
+                print()
+                print("tvec")
+                print(tvec)
+                print()
 
-                for i, corner in enumerate(corners):
-                    # Get the marker ID
-                    marker_id = ids[i][0]
+                # Extract the translation vector (pose information)
+                x, y = tvec[i][0][0], tvec[i][0][1]
 
-                    # Extract the translation vector (pose information)
-                    x, y = tvec[i][0][0], tvec[i][0][1]
-
-                    # Display the marker ID and pose information
-                    print(f"Marker ID: {marker_id}, X: {x:.2f}, Y: {y:.2f}")
+                # Display the marker ID and pose information
+                print(f"Marker ID: {id}, X: {x:.2f}, Y: {y:.2f}")
 
                 # Marker center
                 center_x = np.mean(corners[i][0][:, 0])
